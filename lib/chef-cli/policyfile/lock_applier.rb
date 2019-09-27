@@ -71,7 +71,13 @@ module ChefCLI
             lock = policyfile_lock.included_policy_locks.find do |policy_lock|
               policy_lock["name"] == policy.name
             end
-            policy.apply_locked_source_options(lock["source_options"])
+            if lock.nil?
+              # ensure any new `include_policy` policies are added to the lock file
+              policy.apply_locked_source_options(policy.source_options)
+            else
+              # Ensure that all existing `include_policy` policies are updated to possibly a new source
+              policy.apply_locked_source_options(lock["source_options"])
+            end
           end
         end
       end
