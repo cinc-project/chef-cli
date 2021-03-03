@@ -35,7 +35,7 @@ Gem::Specification.new do |gem|
     Dir.glob("Gemfile*") + # Includes Gemfile and locks
     Dir.glob("*.gemspec") +
     Dir.glob("{lib,spec}/**/*", File::FNM_DOTMATCH).reject { |f| File.directory?(f) }
-  gem.executables   = %w{ cinc-cli }
+  gem.executables   = %w{ cinc-cli cinc-workstation-wrapper chef chef-cli chef-analyze chef-run }
   gem.test_files    = gem.files.grep(%r{^spec/})
   gem.require_paths = ["lib"]
 
