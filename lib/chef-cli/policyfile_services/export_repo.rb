@@ -377,7 +377,7 @@ module ChefCLI
       end
 
       def dot_chef_dir
-        File.join(export_dir, ".chef")
+        File.join(export_dir, ".cinc")
       end
 
       def policyfile_repo_item_path
@@ -390,7 +390,7 @@ module ChefCLI
       end
 
       def dot_chef_staging_dir
-        File.join(staging_dir, ".chef")
+        File.join(staging_dir, ".cinc")
       end
 
       def cookbook_artifacts_staging_dir

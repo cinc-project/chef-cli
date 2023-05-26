@@ -33,7 +33,7 @@ module ChefCLI
 
         `#{ChefCLI::Dist::EXEC} export` creates a #{ChefCLI::Dist::ZERO_PRODUCT} compatible #{ChefCLI::Dist::INFRA_PRODUCT} repository containing the
         cookbooks described in a Policyfile.lock.json. The exported repository also contains
-        a .chef/config.rb which configures #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} to apply your policy. Once the
+        a .cinc/config.rb which configures #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} to apply your policy. Once the
         exported repo is copied to the target machine, you can apply the policy to the
         machine with:
 
