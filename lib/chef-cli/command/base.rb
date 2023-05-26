@@ -92,7 +92,7 @@ module ChefCLI
 
       def check_license_acceptance
         # TODO - is this the right version?
-        LicenseAcceptance::Acceptor.check_and_persist!("chef-workstation", ChefCLI::VERSION.to_s)
+        LicenseAcceptance::Acceptor.check_and_persist!("cinc-workstation", ChefCLI::VERSION.to_s)
       end
 
     end
