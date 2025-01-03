@@ -1,0 +1,17 @@
+---
+image: cincproject/omnibus-debian
+
+stages:
+  - publish
+
+publish-gems:
+  stage: publish
+  # Only run if this is triggered from the web
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "web"
+      when: on_success
+    - when: never
+  tags:
+    - docker-x86_64
+  script:
+    - bash publish-gems.sh
