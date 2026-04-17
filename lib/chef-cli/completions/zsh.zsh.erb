@@ -1,4 +1,4 @@
-function _chef() {
+function _cinc() {
 
   local -a _1st_arguments
   _1st_arguments=(
@@ -12,10 +12,10 @@ function _chef() {
     '*:: :->subcmds' && return 0
 
   if (( CURRENT == 1 )); then
-    _describe -t commands "chef subcommand" _1st_arguments
+    _describe -t commands "cinc subcommand" _1st_arguments
     return
   fi
 }
 
-compdef _chef <%= habitat? ? "chef-cli" : "chef" %>
+compdef _cinc <%= habitat? ? "chef-cli" : "cinc" %>
 

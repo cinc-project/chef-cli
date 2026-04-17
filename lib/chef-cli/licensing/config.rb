@@ -19,8 +19,8 @@
 require "chef-licensing"
 
 ChefLicensing.configure do |config|
-  config.chef_product_name = "workstation"
+  config.chef_product_name = "cinc-workstation"
   config.chef_entitlement_id = "x6f3bc76-a94f-4b6c-bc97-4b7ed2b045c0"
-  config.chef_executable_name = "chef"
+  config.chef_executable_name = "cinc"
   config.license_server_url = "https://services.chef.io/licensing"
 end

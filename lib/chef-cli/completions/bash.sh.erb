@@ -1,5 +1,5 @@
-_chef_comp() {
+_cinc_comp() {
     local COMMANDS="<%= commands.keys.join(' ')-%>"
     COMPREPLY=($(compgen -W "$COMMANDS" -- ${COMP_WORDS[COMP_CWORD]} ))
 }
-complete -F _chef_comp <%= habitat? ? "chef-cli" : "chef" %>
+complete -F _cinc_comp <%= habitat? ? "chef-cli" : "cinc" %>
