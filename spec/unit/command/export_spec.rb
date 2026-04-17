@@ -152,7 +152,7 @@ describe ChefCLI::Command::Export do
         expected_message = <<~MESSAGE
           To converge this system with the exported policy, run:
             cd /path/to/export
-            chef-client -z
+            cinc-client -z
         MESSAGE
         expect(ui.output).to include(expected_message)
       end

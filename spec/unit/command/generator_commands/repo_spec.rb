@@ -178,7 +178,7 @@ describe ChefCLI::Command::GeneratorCommands::Repo do
         let(:file) { "README.md" }
 
         it "is the standard readme" do
-          expect(file_contents).to match(/Every Chef Infra installation needs a Chef Repository/)
+          expect(file_contents).to match(/Every Cinc Infra installation needs a Chef Repository/)
         end
       end
 
@@ -215,7 +215,7 @@ describe ChefCLI::Command::GeneratorCommands::Repo do
         let(:file) { ".chef-repo.txt" }
 
         it "explains why it's there" do
-          expect(file_contents).to include("This file gives the Chef CLI's generators a hint")
+          expect(file_contents).to include("This file gives the Cinc CLI's generators a hint")
         end
       end
 
@@ -231,7 +231,7 @@ describe ChefCLI::Command::GeneratorCommands::Repo do
             let(:argv) { ["new_repo", "--policy-only" ] }
 
             it "tells you whats up" do
-              expect(file_contents).to match(/This directory typically contains Chef Infra cookbooks/)
+              expect(file_contents).to match(/This directory typically contains Cinc Infra cookbooks/)
             end
           end
         end
@@ -256,7 +256,7 @@ describe ChefCLI::Command::GeneratorCommands::Repo do
           let(:file) { "cookbooks/example/recipes/default.rb" }
 
           it "has the right contents" do
-            expect(file_contents).to match(/log "Welcome to Chef Infra Client, \#\{node\["example"\]\["name"\]\}!" do/)
+            expect(file_contents).to match(/log "Welcome to Cinc Client, \#\{node\["example"\]\["name"\]\}!" do/)
           end
         end
       end
@@ -327,7 +327,7 @@ describe ChefCLI::Command::GeneratorCommands::Repo do
               <<~README
                 Create roles here, in either the Role Ruby DSL (.rb) or JSON (.json) files. To install roles on the server, use knife.
 
-                For example, in this directory, you'll find an example role file called `example.json` which can be uploaded to the Chef Infra Server:
+                For example, in this directory, you'll find an example role file called `example.json` which can be uploaded to the Cinc Infra Server:
 
                     knife role from file roles/example.json
 
@@ -349,9 +349,9 @@ describe ChefCLI::Command::GeneratorCommands::Repo do
 
             let(:expected_content) do
               <<~README
-                Create environments here, in either the Role Ruby DSL (.rb) or JSON (.json) files. To install environments on the Chef Infra Server, use the knife command.
+                Create environments here, in either the Role Ruby DSL (.rb) or JSON (.json) files. To install environments on the Cinc Infra Server, use the knife command.
 
-                For example, in this directory, you'll find an example environment file called `example.json` which can be uploaded to the Chef Infra Server:
+                For example, in this directory, you'll find an example environment file called `example.json` which can be uploaded to the Cinc Infra Server:
 
                     knife environment from file environments/example.json
 
