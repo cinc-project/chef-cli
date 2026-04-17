@@ -6,8 +6,8 @@ module ChefCLI
     PRODUCT = "Cinc Workstation".freeze
     PRODUCT_PKG_HOME = "cinc-workstation".freeze
 
-    CHEF_DK_CLI_PACKAGE = "Chef Workstation".freeze
-    CHEF_CLI_PACKAGE = "Chef-Cli".freeze
+    CHEF_DK_CLI_PACKAGE = "Cinc Workstation".freeze
+    CHEF_CLI_PACKAGE = "Cinc-Cli".freeze
 
     # the name of the chef-cli gem
     CLI_PRODUCT = "Cinc CLI".freeze

@@ -1,9 +1,9 @@
-# Policyfile.rb - Describe how you want Chef Infra Client to build your system.
+# Policyfile.rb - Describe how you want Cinc Client to build your system.
 #
 # For more information on the Policyfile feature, visit
 # https://docs.chef.io/policyfile/
 
-# A name that describes what the system you're building with Chef does.
+# A name that describes what the system you're building with Cinc does.
 name '<%= policy_name %>'
 
 <% if include_chef_repo_source %>
@@ -14,7 +14,7 @@ default_source :chef_repo, '../'
 # Where to find external cookbooks:
 default_source :supermarket
 
-# run_list: chef-client will run these recipes in the order specified.
+# run_list: cinc-client will run these recipes in the order specified.
 run_list '<%= policy_run_list %>'
 
 # Specify a custom source for a single cookbook:
