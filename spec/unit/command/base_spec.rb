@@ -100,7 +100,7 @@ describe ChefCLI::Command::Base do
     let(:enforce_license) { true }
 
     it "calls the license acceptance library" do
-      expect(LicenseAcceptance::Acceptor).to receive(:check_and_persist!).with("chef-workstation", ChefCLI::VERSION.to_s)
+      expect(LicenseAcceptance::Acceptor).to receive(:check_and_persist!).with("cinc-workstation", ChefCLI::VERSION.to_s)
       run_command([])
       expect(stdout).to eq("thanks for passing me \n")
     end

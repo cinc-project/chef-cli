@@ -115,12 +115,12 @@ describe ChefCLI::Command::GeneratorCommands::Policyfile do
 
     let(:expected_policyfile_content) do
       <<~POLICYFILE_RB
-        # Policyfile.rb - Describe how you want Chef Infra Client to build your system.
+        # Policyfile.rb - Describe how you want Cinc Client to build your system.
         #
         # For more information on the Policyfile feature, visit
         # https://docs.chef.io/policyfile/
 
-        # A name that describes what the system you're building with Chef does.
+        # A name that describes what the system you're building with Cinc does.
         name 'my-app-frontend'
 
         # This lets you source cookbooks from your chef-repo.
@@ -129,7 +129,7 @@ describe ChefCLI::Command::GeneratorCommands::Policyfile do
         # Where to find external cookbooks:
         default_source :supermarket
 
-        # run_list: chef-client will run these recipes in the order specified.
+        # run_list: cinc-client will run these recipes in the order specified.
         run_list 'my-app-frontend::default'
 
         # Specify a custom source for a single cookbook:
@@ -212,7 +212,7 @@ describe ChefCLI::Command::GeneratorCommands::Policyfile do
     let(:argv) { %w{ foo bar baz } }
 
     it "shows usage and exits" do
-      expected_stdout = "Usage: chef generate policyfile [NAME] [options]"
+      expected_stdout = "Usage: cinc generate policyfile [NAME] [options]"
 
       expect(generator.run).to eq(1)
       expect(stderr).to include(expected_stdout)

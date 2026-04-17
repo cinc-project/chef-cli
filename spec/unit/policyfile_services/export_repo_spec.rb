@@ -272,11 +272,11 @@ describe ChefCLI::PolicyfileServices::ExportRepo do
 
           it "creates a working local mode configuration file" do
             expected_config_text = <<~CONFIG
-              ### Chef Infra Client Configuration ###
-              # The settings in this file will configure chef to apply the exported policy in
+              ### Cinc Client Configuration ###
+              # The settings in this file will configure cinc-client to apply the exported policy in
               # this directory. To use it, run:
               #
-              # chef-client -z
+              # cinc-client -z
               #
 
               policy_name 'install-example'
@@ -285,21 +285,21 @@ describe ChefCLI::PolicyfileServices::ExportRepo do
               use_policyfile true
               policy_document_native_api true
 
-              # In order to use this repo, you need a version of Chef Infra Client and Chef Zero
+              # In order to use this repo, you need a version of Cinc Client and Cinc Infra Zero
               # that supports policyfile "native mode" APIs:
               current_version = Gem::Version.new(Chef::VERSION)
               unless Gem::Requirement.new(">= 12.7").satisfied_by?(current_version)
                 puts("!" * 80)
                 puts(<<-MESSAGE)
-              This Chef Repo requires features introduced in Chef Infra Client 12.7, but you are using
-              Chef \#{Chef::VERSION}. Please upgrade to Chef Infra Client 12.7 or later.
+              This repo requires features introduced in Cinc Client 12.7, but you are using
+              \#{Chef::VERSION}. Please upgrade to Cinc Client 12.7 or later.
               MESSAGE
                 puts("!" * 80)
                 exit!(1)
               end
 
             CONFIG
-            config_path = File.join(export_dir, ".chef", "config.rb")
+            config_path = File.join(export_dir, ".cinc", "config.rb")
             expect(File).to exist(config_path)
             expect(File.read(config_path)).to eq(expected_config_text)
           end
@@ -322,11 +322,11 @@ describe ChefCLI::PolicyfileServices::ExportRepo do
 
             it "creates a working local mode configuration file with the changed policy_group" do
               expected_config_text = <<~CONFIG
-              ### Chef Infra Client Configuration ###
-              # The settings in this file will configure chef to apply the exported policy in
+              ### Cinc Client Configuration ###
+              # The settings in this file will configure cinc-client to apply the exported policy in
               # this directory. To use it, run:
               #
-              # chef-client -z
+              # cinc-client -z
               #
 
               policy_name 'install-example'
@@ -335,21 +335,21 @@ describe ChefCLI::PolicyfileServices::ExportRepo do
               use_policyfile true
               policy_document_native_api true
 
-              # In order to use this repo, you need a version of Chef Infra Client and Chef Zero
+              # In order to use this repo, you need a version of Cinc Client and Cinc Infra Zero
               # that supports policyfile "native mode" APIs:
               current_version = Gem::Version.new(Chef::VERSION)
               unless Gem::Requirement.new(">= 12.7").satisfied_by?(current_version)
                 puts("!" * 80)
                 puts(<<-MESSAGE)
-              This Chef Repo requires features introduced in Chef Infra Client 12.7, but you are using
-              Chef \#{Chef::VERSION}. Please upgrade to Chef Infra Client 12.7 or later.
+              This repo requires features introduced in Cinc Client 12.7, but you are using
+              \#{Chef::VERSION}. Please upgrade to Cinc Client 12.7 or later.
               MESSAGE
                 puts("!" * 80)
                 exit!(1)
               end
 
               CONFIG
-              config_path = File.join(export_dir, ".chef", "config.rb")
+              config_path = File.join(export_dir, ".cinc", "config.rb")
               expect(File).to exist(config_path)
               expect(File.read(config_path)).to eq(expected_config_text)
             end

@@ -17,6 +17,7 @@
 require "spec_helper"
 require "stringio"
 require "chef-cli/cli"
+require "chef-cli/licensing/base"
 require "unit/fixtures/command/cli_test_command"
 
 describe ChefCLI::CLI do
@@ -46,9 +47,9 @@ describe ChefCLI::CLI do
       Patents: #{ChefCLI::Dist::PATENTS}
 
       Usage:
-          chef -h/--help
-          chef -v/--version
-          chef command [arguments...] [options...]
+          cinc -h/--help
+          cinc -v/--version
+          cinc command [arguments...] [options...]
 
       Available Commands:
           gem      Runs the `gem` command in context of the embedded ruby
@@ -121,7 +122,7 @@ describe ChefCLI::CLI do
             "manifest_format": 2,
             "build_version": "d.e.v",
             "software": {
-              "habitat": {
+              "biome": {
                 "locked_version": "1.2.3"
               }
             }
@@ -138,7 +139,7 @@ describe ChefCLI::CLI do
             "chef": [
               "0.0.2"
             ],
-            "inspec": [
+            "cinc-auditor-bin": [
               "0.0.3"
             ],
             "test-kitchen": [
@@ -154,11 +155,11 @@ describe ChefCLI::CLI do
       # rubocop:disable Layout/TrailingWhitespace
       let(:full_table_with_version_message) do
         <<~E
-          Chef Workstation version: d.e.v
-          Chef Infra Client version: 0.0.2
-          Chef InSpec version: 0.0.3
-          Chef CLI version: 0.0.1
-          Chef Habitat version: 1.2.3
+          Cinc Workstation version: d.e.v
+          Cinc Client version: 0.0.2
+          Cinc Auditor version: 0.0.3
+          Cinc CLI version: 0.0.1
+          Biome version: 1.2.3
           Test Kitchen version: 0.0.4
           Cookstyle version: 0.0.6
         E
@@ -166,11 +167,11 @@ describe ChefCLI::CLI do
 
       let(:full_table_with_unknown_version_message) do
         <<~E
-          Chef Workstation version: unknown
-          Chef Infra Client version: unknown
-          Chef InSpec version: unknown
-          Chef CLI version: unknown
-          Chef Habitat version: unknown
+          Cinc Workstation version: unknown
+          Cinc Client version: unknown
+          Cinc Auditor version: unknown
+          Cinc CLI version: unknown
+          Biome version: unknown
           Test Kitchen version: unknown
           Cookstyle version: unknown
         E
@@ -265,7 +266,7 @@ describe ChefCLI::CLI do
 
     before do
       allow(Gem).to receive(:ruby).and_return(ruby_path)
-      allow(cli).to receive(:package_home).and_return("/opt/chef-workstation")
+      allow(cli).to receive(:package_home).and_return("/opt/cinc-workstation")
     end
 
     context "when installed via omnibus" do
@@ -275,7 +276,7 @@ describe ChefCLI::CLI do
 
       context "on unix" do
 
-        let(:ruby_path) { "/opt/chef-workstation/embedded/bin/ruby" }
+        let(:ruby_path) { "/opt/cinc-workstation/embedded/bin/ruby" }
         before do
           stub_const("File::PATH_SEPARATOR", ":")
           allow(Chef::Util::PathHelper).to receive(:cleanpath) do |path|
@@ -284,37 +285,37 @@ describe ChefCLI::CLI do
         end
 
         it "complains if embedded is first" do
-          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/chef-workstation/embedded/bin:/opt/chef-workstation/bin" })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/cinc-workstation/embedded/bin:/opt/cinc-workstation/bin" })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
           expect(stderr).to include("please reverse that order")
-          expect(stderr).to include("chef shell-init")
+          expect(stderr).to include("cinc shell-init")
         end
 
         it "complains if only embedded is present" do
-          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/chef-workstation/embedded/bin" })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/cinc-workstation/embedded/bin" })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
           expect(stderr).to include("you must add")
-          expect(stderr).to include("chef shell-init")
+          expect(stderr).to include("cinc shell-init")
         end
 
         it "passes when both are present in the correct order" do
-          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/chef-workstation/bin:/opt/chef-workstation/embedded/bin" })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/cinc-workstation/bin:/opt/cinc-workstation/embedded/bin" })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
         end
 
         it "passes when only the omnibus bin dir is present" do
-          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/chef-workstation/bin" })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => "/opt/cinc-workstation/bin" })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("/opt/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("/opt/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
         end
@@ -322,8 +323,8 @@ describe ChefCLI::CLI do
 
       context "on windows" do
 
-        let(:ruby_path) { "c:/opscode/chef-workstation/embedded/bin/ruby.exe" }
-        let(:omnibus_root) { "c:/opscode/chef-workstation" }
+        let(:ruby_path) { "c:/cinc-project/cinc-workstation/embedded/bin/ruby.exe" }
+        let(:omnibus_root) { "c:/cinc-project/cinc-workstation" }
 
         before do
           # Would be preferable not to stub this, but `File.expand_path` does
@@ -331,8 +332,8 @@ describe ChefCLI::CLI do
           #
           # I manually verified the behavior:
           #
-          #   $ /c/opscode/chef-workstation/embedded/bin/ruby -e 'p File.expand_path(File.join(Gem.ruby, "..", "..", ".."))'
-          #   "c:/opscode/chef-workstation"
+          #   $ /c/cinc-project/cinc-workstation/embedded/bin/ruby -e 'p File.expand_path(File.join(Gem.ruby, "..", "..", ".."))'
+          #   "c:/cinc-project/cinc-workstation"
           allow(cli).to receive(:expected_omnibus_root).and_return(ruby_path)
           allow(cli).to receive(:omnibus_install?).and_return(true)
           allow(Chef::Platform).to receive(:windows?).and_return(true)
@@ -343,37 +344,37 @@ describe ChefCLI::CLI do
         end
 
         it "complains if embedded is first" do
-          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\opscode\chef-workstation\embedded\bin;C:\opscode\chef-workstation\bin' })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/opscode/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/opscode/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\cinc-project\cinc-workstation\embedded\bin;C:\cinc-project\cinc-workstation\bin' })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/cinc-project/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/cinc-project/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
           expect(stderr).to include("please reverse that order")
-          expect(stderr).to include("chef shell-init")
+          expect(stderr).to include("cinc shell-init")
         end
 
         it "complains if only embedded is present" do
-          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\opscode\chef-workstation\embedded\bin' })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/opscode/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/opscode/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\cinc-project\cinc-workstation\embedded\bin' })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/cinc-project/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/cinc-project/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
           expect(stderr).to include("you must add")
-          expect(stderr).to include("chef shell-init")
+          expect(stderr).to include("cinc shell-init")
         end
 
         it "passes when both are present in the correct order" do
-          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\opscode\chef-workstation\bin;C:\opscode\chef-workstation\embedded\bin' })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/opscode/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/opscode/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\cinc-project\cinc-workstation\bin;C:\cinc-project\cinc-workstation\embedded\bin' })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/cinc-project/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/cinc-project/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
         end
 
         it "passes when only the omnibus bin dir is present" do
-          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\opscode\chef-workstation\bin' })
-          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/opscode/chef-workstation/embedded/bin")
-          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/opscode/chef-workstation/bin")
+          allow(cli).to receive(:env).and_return({ "PATH" => 'C:\cinc-project\cinc-workstation\bin' })
+          allow(cli).to receive(:omnibus_embedded_bin_dir).and_return("c:/cinc-project/cinc-workstation/embedded/bin")
+          allow(cli).to receive(:omnibus_bin_dir).and_return("c:/cinc-project/cinc-workstation/bin")
           run_cli_with_sanity_check(0)
           expect(stdout).to eq(base_help_message)
         end

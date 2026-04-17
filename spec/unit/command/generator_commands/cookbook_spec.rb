@@ -131,7 +131,7 @@ describe ChefCLI::Command::GeneratorCommands::Cookbook do
   context "when given invalid/incomplete arguments" do
 
     let(:expected_help_message) do
-      "Usage: chef generate cookbook NAME [options]\n"
+      "Usage: cinc generate cookbook NAME [options]\n"
     end
 
     def with_argv(argv)
@@ -340,18 +340,18 @@ describe ChefCLI::Command::GeneratorCommands::Cookbook do
 
         let(:expected_content) do
           <<~POLICYFILE_RB
-            # Policyfile.rb - Describe how you want Chef Infra Client to build your system.
+            # Policyfile.rb - Describe how you want Cinc Client to build your system.
             #
             # For more information on the Policyfile feature, visit
             # https://docs.chef.io/policyfile/
 
-            # A name that describes what the system you're building with Chef does.
+            # A name that describes what the system you're building with Cinc does.
             name 'new_cookbook'
 
             # Where to find external cookbooks:
             default_source :supermarket
 
-            # run_list: chef-client will run these recipes in the order specified.
+            # run_list: cinc-client will run these recipes in the order specified.
             run_list 'new_cookbook::default'
 
             # Specify a custom source for a single cookbook:
@@ -390,9 +390,9 @@ describe ChefCLI::Command::GeneratorCommands::Cookbook do
             provisioner:
               name: chef_infra
 
-              ## product_name and product_version specifies a specific Chef product and version to install.
+              ## product_name and product_version specifies a specific Cinc product and version to install.
               ## see the Chef documentation for more details: https://docs.chef.io/workstation/config_yml_kitchen/
-              #  product_name: chef
+              product_name: cinc
               #  product_version: 18
 
             verifier:
@@ -533,9 +533,9 @@ describe ChefCLI::Command::GeneratorCommands::Cookbook do
               #   always_update_cookbooks: <%= !ENV['CI'] %>
               always_update_cookbooks: true
 
-              ## product_name and product_version specifies a specific Chef product and version to install.
+              ## product_name and product_version specifies a specific Cinc product and version to install.
               ## see the Chef documentation for more details: https://docs.chef.io/workstation/config_yml_kitchen/
-              #  product_name: chef
+              product_name: cinc
               #  product_version: 18
 
             verifier:
