@@ -155,11 +155,11 @@ describe ChefCLI::Command::ShellInit do
 
       let(:expected_completion_function) do
         <<~END_COMPLETION
-          _chef_comp() {
+          _cinc_comp() {
               local COMMANDS="exec env gem generate"
               COMPREPLY=($(compgen -W "$COMMANDS" -- ${COMP_WORDS[COMP_CWORD]} ))
           }
-          complete -F _chef_comp chef
+          complete -F _cinc_comp cinc
         END_COMPLETION
       end
 
@@ -205,7 +205,7 @@ describe ChefCLI::Command::ShellInit do
 
       let(:expected_completion_function) do
         <<~END_COMPLETION
-          function _chef() {
+          function _cinc() {
 
             local -a _1st_arguments
             _1st_arguments=(
@@ -220,12 +220,12 @@ describe ChefCLI::Command::ShellInit do
               '*:: :->subcmds' && return 0
 
             if (( CURRENT == 1 )); then
-              _describe -t commands "chef subcommand" _1st_arguments
+              _describe -t commands "cinc subcommand" _1st_arguments
               return
             fi
           }
 
-          compdef _chef chef
+          compdef _cinc cinc
 
         END_COMPLETION
       end
@@ -287,13 +287,12 @@ describe ChefCLI::Command::ShellInit do
 
           # Fish Shell command-line completions for #{ChefCLI::Dist::PRODUCT}
 
-          # set a list of all the chef commands in the Ruby chef-cli
-          set -l chef_commands exec env gem generate;
+          set -l cinc_commands exec env gem generate;
 
-          complete -c chef -f -n "not __fish_seen_subcommand_from $chef_commands" -a exec -d "Runs the command in context of the embedded ruby";
-          complete -c chef -f -n "not __fish_seen_subcommand_from $chef_commands" -a env -d "Prints environment variables used by #{ChefCLI::Dist::PRODUCT}";
-          complete -c chef -f -n "not __fish_seen_subcommand_from $chef_commands" -a gem -d "Runs the `gem` command in context of the embedded Ruby";
-          complete -c chef -f -n "not __fish_seen_subcommand_from $chef_commands" -a generate -d "Generate a new repository, cookbook, or other component";
+          complete -c cinc -f -n "not __fish_seen_subcommand_from $cinc_commands" -a exec -d "Runs the command in context of the embedded ruby";
+          complete -c cinc -f -n "not __fish_seen_subcommand_from $cinc_commands" -a env -d "Prints environment variables used by #{ChefCLI::Dist::PRODUCT}";
+          complete -c cinc -f -n "not __fish_seen_subcommand_from $cinc_commands" -a gem -d "Runs the `gem` command in context of the embedded Ruby";
+          complete -c cinc -f -n "not __fish_seen_subcommand_from $cinc_commands" -a generate -d "Generate a new repository, cookbook, or other component";
 
         END_COMPLETION
       end
@@ -408,11 +407,11 @@ describe ChefCLI::Command::ShellInit do
 
       let(:expected_completion_function) do
         <<~END_COMPLETION
-          _chef_comp() {
-              local COMMANDS="exec env gem generate"
-              COMPREPLY=($(compgen -W "$COMMANDS" -- ${COMP_WORDS[COMP_CWORD]} ))
+          _cinc_comp() {
+              local COMMANDS=\"exec env gem generate\"
+              COMPREPLY=($(compgen -W \"$COMMANDS\" -- ${COMP_WORDS[COMP_CWORD]} ))
           }
-          complete -F _chef_comp chef-cli
+          complete -F _cinc_comp chef-cli
         END_COMPLETION
       end
 
