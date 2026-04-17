@@ -222,7 +222,7 @@ module ChefCLI
           end
 
           if config[:workflow] || config[:pipeline]
-            err("[DEPRECATION] Chef Workflow (Delivery) is end of life (EOL) as of December 31, 2020 and the --workflow and --pipeline flags have been removed")
+            err("[DEPRECATION] #{ChefCLI::Dist::WORKFLOW} is end of life (EOL) as of December 31, 2020 and the --workflow and --pipeline flags have been removed")
             @params_valid = false
           end
 

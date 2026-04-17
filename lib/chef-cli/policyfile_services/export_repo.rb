@@ -27,6 +27,7 @@ require "chef/cookbook/chefignore"
 require_relative "../service_exceptions"
 require_relative "../policyfile_lock"
 require_relative "../policyfile/storage_config"
+require_relative "../dist"
 
 module ChefCLI
   module PolicyfileServices
@@ -233,11 +234,11 @@ module ChefCLI
       def create_client_rb
         File.open(client_rb_staging_path, "wb+") do |f|
           f.print( <<~CONFIG )
-            ### Chef Infra Client Configuration ###
-            # The settings in this file will configure chef to apply the exported policy in
+            ### #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} Configuration ###
+            # The settings in this file will configure #{ChefCLI::Dist::INFRA_CLIENT_CLI} to apply the exported policy in
             # this directory. To use it, run:
             #
-            # chef-client -z
+            # #{ChefCLI::Dist::INFRA_CLIENT_CLI} -z
             #
 
             policy_name '#{policy_name}'
@@ -246,14 +247,14 @@ module ChefCLI
             use_policyfile true
             policy_document_native_api true
 
-            # In order to use this repo, you need a version of Chef Infra Client and Chef Zero
+            # In order to use this repo, you need a version of #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} and #{ChefCLI::Dist::ZERO_PRODUCT}
             # that supports policyfile "native mode" APIs:
             current_version = Gem::Version.new(Chef::VERSION)
             unless Gem::Requirement.new(">= 12.7").satisfied_by?(current_version)
               puts("!" * 80)
               puts(<<-MESSAGE)
-            This Chef Repo requires features introduced in Chef Infra Client 12.7, but you are using
-            Chef \#{Chef::VERSION}. Please upgrade to Chef Infra Client 12.7 or later.
+            This repo requires features introduced in #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} 12.7, but you are using
+            \#{Chef::VERSION}. Please upgrade to #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} 12.7 or later.
             MESSAGE
               puts("!" * 80)
               exit!(1)
@@ -266,26 +267,26 @@ module ChefCLI
       def create_readme_md
         File.open(readme_staging_path, "wb+") do |f|
           f.print( <<~README )
-            # Exported Chef Infra Repository for Policy '#{policy_name}'
+            # Exported #{ChefCLI::Dist::INFRA_PRODUCT} Repository for Policy '#{policy_name}'
 
             Policy revision: #{policyfile_lock.revision_id}
 
-            This directory contains all the cookbooks and configuration necessary for Chef
-            to converge a system using this exported policy. To converge a system with the
-            exported policy, use a privileged account to run `chef-client -z` from the
+            This directory contains all the cookbooks and configuration necessary for
+            #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} to converge a system using this exported policy. To converge a system with the
+            exported policy, use a privileged account to run `#{ChefCLI::Dist::INFRA_CLIENT_CLI} -z` from the
             directory containing the exported policy.
 
             ## Contents:
 
             ### Policyfile.lock.json
 
-            A copy of the exported policy, used by the `chef push-archive` command.
+            A copy of the exported policy, used by the `#{ChefCLI::Dist::EXEC} push-archive` command.
 
             ### .chef/config.rb
 
-            A configuration file for Chef Infra Client. This file configures Chef Infra Client to
-            use the correct `policy_name` and `policy_group` for this exported repository. Chef
-            Infra Client will use this configuration automatically if you've set your working
+            A configuration file for #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT}. This file configures #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} to
+            use the correct `policy_name` and `policy_group` for this exported repository.
+            #{ChefCLI::Dist::INFRA_CLIENT_PRODUCT} will use this configuration automatically if you've set your working
             directory properly.
 
             ### cookbook_artifacts/
@@ -294,11 +295,11 @@ module ChefCLI
 
             ### policies/
 
-            A different copy of the exported policy, used by the `chef-client` command.
+            A different copy of the exported policy, used by the `#{ChefCLI::Dist::INFRA_CLIENT_CLI}` command.
 
             ### policy_groups/
 
-            Policy groups are used by Chef Infra Server to manage multiple revisions of the same
+            Policy groups are used by #{ChefCLI::Dist::SERVER_PRODUCT} to manage multiple revisions of the same
             policy. The default "local" policy is recommended for export use since there can be
             no different revisions when not utilizing a server.
           README

@@ -2,9 +2,12 @@
 driver:
   name: dokken
   privileged: true  # allows systemd services to start
+  chef_image: cincproject/cinc
 
 provisioner:
   name: dokken
+  product_name: cinc
+  chef_binary: /opt/cinc/bin/cinc-client
 
 transport:
   name: dokken

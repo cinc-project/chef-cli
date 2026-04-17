@@ -21,6 +21,7 @@ require "kitchen/provisioner/chef_base"
 # the version of mixlib-shellout to use. Kitchen currently locked at 1.4,
 # chef-cli is on 2.x
 require_relative "../../chef-cli/policyfile_services/export_repo"
+require_relative "../../chef-cli/dist"
 
 module Kitchen
 
@@ -79,7 +80,7 @@ module Kitchen
       # (see Base#finalize_config!)
       def finalize_config!(*args)
         super
-        banner("Using policyfile mode for chef-client")
+        banner("Using policyfile mode for #{ChefCLI::Dist::INFRA_CLIENT_CLI}")
       end
 
       # (see Base#create_sandbox)

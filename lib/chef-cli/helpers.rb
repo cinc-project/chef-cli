@@ -109,7 +109,7 @@ module ChefCLI
       chef_cli_path
 
     rescue => e
-      ChefCLI::UI.new.err("Error fetching Chef-CLI path: #{e.message}")
+      ChefCLI::UI.new.err("Error fetching #{ChefCLI::Dist::CLI_PRODUCT} path: #{e.message}")
       nil
     end
 
@@ -162,11 +162,11 @@ module ChefCLI
         versioned_pkg_prefix = fetch_chef_cli_version_pkg if ENV["CHEF_CLI_VERSION"]
 
         if show_warning && ENV["CHEF_CLI_VERSION"] && !versioned_pkg_prefix
-          ChefCLI::UI.new.msg("Warning: Habitat package '#{ChefCLI::Dist::HAB_PKG_NAME}' with version '#{ENV["CHEF_CLI_VERSION"]}' not found.")
+          ChefCLI::UI.new.msg("Warning: #{ChefCLI::Dist::HAB_PRODUCT} package '#{ChefCLI::Dist::HAB_PKG_NAME}' with version '#{ENV["CHEF_CLI_VERSION"]}' not found.")
         end
         # Use the first available package for bin_pkg_prefix
         bin_pkg_prefix ||= versioned_pkg_prefix || get_pkg_prefix(ChefCLI::Dist::HAB_PKG_NAME)
-        raise "Error: Could not determine the Habitat package prefix. Ensure #{ChefCLI::Dist::HAB_PKG_NAME} is installed and CHEF_CLI_VERSION is set correctly." unless bin_pkg_prefix
+        raise "Error: Could not determine the #{ChefCLI::Dist::HAB_PRODUCT} package prefix. Ensure #{ChefCLI::Dist::HAB_PKG_NAME} is installed and CHEF_CLI_VERSION is set correctly." unless bin_pkg_prefix
 
         # Determine vendor_dir by prioritizing the versioned package first
         vendor_pkg_prefix = versioned_pkg_prefix || get_pkg_prefix(ChefCLI::Dist::HAB_PKG_NAME)

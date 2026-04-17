@@ -73,10 +73,10 @@ module ChefCLI
           read_and_validate_params
           if params_valid?
             setup_context
-            msg("Generating Chef Infra repo #{repo_name}")
+            msg("Generating #{ChefCLI::Dist::INFRA_PRODUCT} repo #{repo_name}")
             chef_runner.converge
             msg("")
-            msg("Your new Chef Infra repo is ready! Type `cd #{repo_name}` to enter it.")
+            msg("Your new #{ChefCLI::Dist::INFRA_PRODUCT} repo is ready! Type `cd #{repo_name}` to enter it.")
             0
           else
             err(opt_parser)
