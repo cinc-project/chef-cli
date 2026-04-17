@@ -21,7 +21,7 @@ Encoding.default_external = Encoding::UTF_8
 
 require 'mixlib/shellout'
 
-command = File.basename($PROGRAM_NAME).sub(/chef/, 'cinc')
+command = File.basename($PROGRAM_NAME).sub('chef', 'cinc')
 
 STDERR.puts "Redirecting to #{command}"
 
