@@ -55,7 +55,7 @@ module ChefCLI
       private
 
       # Checks gem sources before any remote-fetching command and ensures the
-      # Chef Premium RubyGem server is configured:
+      # Chef Premium RubyGem server is configured: 
       #   - Chef source present with valid v1 credentials → proceed.
       #   - Non-standard source present (incl. file://) → assume airgap, warn and skip.
       #   - Only rubygems.org (or unauthenticated chef source) → obtain license key and run `gem sources --add`.
