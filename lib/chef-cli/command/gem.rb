@@ -65,7 +65,7 @@ module ChefCLI
 
         custom = non_standard_sources
         unless custom.empty?
-          err("WARN: A custom gem source (#{custom.join(", ")}) is already configured; assuming an air-gapped environment.")
+          err("WARN: A custom gem source is already configured assuming an air-gapped environment.")
           err("WARN: The Chef Premium RubyGem source was not added. Premium extensions may be unavailable.")
           return
         end
