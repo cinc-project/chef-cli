@@ -1,15 +1,16 @@
 <!-- usage documentation: https://expeditor.chef.io/docs/reference/changelog/#common-changelog -->
-<!-- latest_release 6.1.37 -->
-## [v6.1.37](https://github.com/chef/chef-cli/tree/v6.1.37) (2026-08-26)
+<!-- latest_release 6.1.38 -->
+## [v6.1.38](https://github.com/chef/chef-cli/tree/v6.1.38) (2026-09-01)
 
 #### Merged Pull Requests
-- CHEF-37329: add Linux ARM Habitat validation in Expeditor pipeline [#347](https://github.com/chef/chef-cli/pull/347) ([sanjain-progress](https://github.com/sanjain-progress))
+- CHEF-34005: Auto-configure Chef Premium RubyGem server as gem source [#349](https://github.com/chef/chef-cli/pull/349) ([sanghinitin](https://github.com/sanghinitin))
 <!-- latest_release -->
 
 <!-- release_rollup since=6.1.34 -->
 ### Changes not yet released to rubygems.org
 
 #### Merged Pull Requests
+- CHEF-34005: Auto-configure Chef Premium RubyGem server as gem source [#349](https://github.com/chef/chef-cli/pull/349) ([sanghinitin](https://github.com/sanghinitin)) <!-- 6.1.38 -->
 - CHEF-37329: add Linux ARM Habitat validation in Expeditor pipeline [#347](https://github.com/chef/chef-cli/pull/347) ([sanjain-progress](https://github.com/sanjain-progress)) <!-- 6.1.37 -->
 - CHEF-34003: Support ~/.chef/ruby/&lt;version&gt;/gems for Habitat gem persistence [#343](https://github.com/chef/chef-cli/pull/343) ([sanghinitin](https://github.com/sanghinitin)) <!-- 6.1.36 -->
 - CHEF-34733: Add Habitat plan for macOS aarch64-darwin platform [#345](https://github.com/chef/chef-cli/pull/345) ([sanghinitin](https://github.com/sanghinitin)) <!-- 6.1.35 -->
