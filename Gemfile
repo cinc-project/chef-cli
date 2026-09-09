@@ -8,7 +8,7 @@ gem "appbundler"
 
 group :test do
   gem "rake"
-  gem "rspec", "=3.12.0"
+  gem "rspec", "3.13.2"
   gem "rspec-expectations", "~> 3.8"
   gem "rspec-mocks", "~> 3.8"
   gem "cookstyle", ">= 7.32"
