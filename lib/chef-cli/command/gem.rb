@@ -37,7 +37,8 @@ module ChefCLI
 
       def run(params)
         setup_gem_environment if habitat_gem_home_enabled?
-        ensure_chef_gem_source(params)
+        # Cinc: do not auto-configure the Chef Premium RubyGem source
+        # (rubygems.chef.io); `cinc gem` stays a plain rubygems forwarder.
         retval = Gem::GemRunner.new.run(params.clone)
         retval.nil? || retval
       rescue Gem::SystemExitException => e

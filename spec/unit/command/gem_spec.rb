@@ -37,7 +37,7 @@ describe ChefCLI::Command::GemForwarder do
   end
 
   it "has a usage banner" do
-    expect(command_instance.banner).to eq("Usage: chef gem GEM_COMMANDS_AND_OPTIONS")
+    expect(command_instance.banner).to eq("Usage: cinc gem GEM_COMMANDS_AND_OPTIONS")
   end
 
   describe "#needs_version?" do
@@ -57,10 +57,10 @@ describe ChefCLI::Command::GemForwarder do
         allow(ENV).to receive(:[]).with("CHEF_GEM_HOME_ENABLED").and_return(nil)
       end
 
-      # TC-11: source auto-configuration applies regardless of Habitat mode
-      it "calls ensure_chef_gem_source before forwarding to GemRunner" do
-        expect(command_instance).to receive(:ensure_chef_gem_source).with(%w{install knife}).ordered
-        expect(gem_runner).to receive(:run).with(%w{install knife}).and_return(true).ordered
+      # Cinc: the Chef Premium RubyGem source is never auto-configured
+      it "does not call ensure_chef_gem_source before forwarding to GemRunner" do
+        expect(command_instance).not_to receive(:ensure_chef_gem_source)
+        expect(gem_runner).to receive(:run).with(%w{install knife}).and_return(true)
         command_instance.run(%w{install knife})
       end
 
